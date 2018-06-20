@@ -3,7 +3,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
-	compileOnly group: "org.osgi", name: "osgi.core"
+	compileOnly group: "org.osgi", name: "org.osgi.core"
 	compileOnly project(":apps:service-builder:jndi:jndi-api")
 
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.remote.api"
