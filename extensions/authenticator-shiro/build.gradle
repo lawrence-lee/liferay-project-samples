@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compile group: "org.apache.shiro", name: "shiro-core"
+	compile group: "org.osgi", name: "org.osgi.service.component.annotations"
+
+	compileOnly group: "org.osgi", name: "osgi.cmpn"
+	compileOnly group: "org.osgi", name: "osgi.core"
+}

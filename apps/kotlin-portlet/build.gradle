@@ -1,0 +1,18 @@
+buildscript {
+	dependencies {
+		classpath group: "org.jetbrains.kotlin", name: "kotlin-gradle-plugin", version: "latest.release"
+	}
+	repositories {
+		jcenter()
+	}
+}
+
+apply plugin: 'kotlin'
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
+	compileOnly group: "javax.portlet", name: "portlet-api"
+	compileOnly group: "org.jetbrains.kotlin", name: "kotlin-osgi-bundle"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+}

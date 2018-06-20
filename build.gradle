@@ -1,0 +1,77 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+subprojects { subproject ->
+	buildscript {
+		repositories {
+			maven {
+				url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			}
+		}
+	}
+
+	plugins.withId("java") {
+		sourceCompatibility = "1.8"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	subproject.plugins.withId("com.liferay.plugin") {
+		liferay {
+			appServers {
+				tomcat {
+					if (project.hasProperty('latestBranch')) {
+						version = "8.5.20"
+					}
+					else {
+						version = "8.0.32"
+					}
+				}
+			}
+		}
+	}
+}
+
+configurations {
+	aries
+}
+
+dependencies {
+	aries 'org.apache.aries.jmx:org.apache.aries.jmx.api:1.1.5'
+	aries 'org.apache.aries.jmx:org.apache.aries.jmx.core:1.1.7'
+	aries 'org.apache.aries:org.apache.aries.util:1.1.3'
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+task deployAries(type: Copy) {
+	from configurations.aries
+	into "bundles/osgi/test"
+}
+
+initBundle.finalizedBy deployAries
+
+initBundle {
+	doLast {
+		delete fileTree('bundles/osgi/test') {
+			include '**/com.liferay*'
+		}
+	}
+}

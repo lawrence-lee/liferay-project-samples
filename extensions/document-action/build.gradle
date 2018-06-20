@@ -1,0 +1,9 @@
+dependencies {
+	compileOnly group: "com.liferay", name: "com.liferay.document.library.api"
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compileOnly group: "javax.portlet", name: "portlet-api"
+	compileOnly group: "javax.servlet", name: "servlet-api"
+	compileOnly group: "org.osgi", name: "osgi.cmpn"
+	compileOnly group: "org.osgi", name: "osgi.core"
+}

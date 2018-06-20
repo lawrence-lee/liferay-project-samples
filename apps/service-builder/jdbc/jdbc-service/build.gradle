@@ -1,0 +1,49 @@
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compileOnly group: "org.osgi", name: "osgi.cmpn"
+	compileOnly group: "org.osgi", name: "osgi.core"
+	compileOnly project(":apps:service-builder:jdbc:jdbc-api")
+
+	testCompile group: "biz.aQute.bnd", name: "biz.aQute.remote.api"
+	testCompile group: "com.google.guava", name: "guava"
+	testCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay"
+	testCompile group: "junit", name: "junit"
+	testCompile group: "org.hsqldb", name: "hsqldb"
+	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container"
+	testCompile group: "org.osgi", name: "osgi.cmpn"
+	testCompile project(":apps:service-builder:jdbc:jdbc-api")
+}
+
+buildService {
+	apiDir = "../jdbc-api/src/main/java"
+}
+
+group = "com.liferay.blade.samples.jdbcservicebuilder"
+
+startTestableTomcat {
+	checkTimeout = 10 * 60 * 1000
+}
+
+testIntegration {
+	testClassesDir = sourceSets.testIntegration.output.classesDir
+	outputs.upToDateWhen { false }
+
+	dependsOn jar, ":initBundle", startTestableTomcat
+
+	systemProperty 'jarFile', jar.archivePath
+
+	dependsOn ":apps:service-builder:jdbc:jdbc-api:jar"
+
+	systemProperty 'jdbcApiJarFile', project(':apps:service-builder:jdbc:jdbc-api').jar.archivePath
+
+}
+
+stopTestableTomcat {
+	doLast {
+		delete new File(liferay.liferayHome, "data")
+	}
+}
+
+check.dependsOn testIntegration
